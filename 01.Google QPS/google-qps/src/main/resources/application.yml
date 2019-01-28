@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: lab-google-qps
+server:
+  port: 8080
