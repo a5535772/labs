@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: lab-hystrix-command
+server:
+  port: 8080
