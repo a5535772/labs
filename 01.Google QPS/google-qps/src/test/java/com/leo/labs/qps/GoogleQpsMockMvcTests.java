@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.leo.labs.qps.controller.IndexController;
+import com.leo.labs.qps.controller.HelloController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +23,7 @@ public class GoogleQpsMockMvcTests {
 
 	@Before
 	public void setUp() throws Exception {
-		mvc = MockMvcBuilders.standaloneSetup(new IndexController()).build();
+		mvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
 	}
 
 	@Test

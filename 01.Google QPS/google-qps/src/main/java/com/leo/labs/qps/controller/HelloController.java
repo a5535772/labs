@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.util.concurrent.RateLimiter;
 
 @RestController
-public class IndexController {
+public class HelloController {
 	public static final String Succ = "succ";
 	public static final String Fail = "fail";
 

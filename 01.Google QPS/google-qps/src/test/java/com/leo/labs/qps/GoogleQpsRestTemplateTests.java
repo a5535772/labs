@@ -14,7 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.leo.labs.qps.controller.IndexController;
+import com.leo.labs.qps.controller.HelloController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GoogleQpsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -42,7 +42,7 @@ public class GoogleQpsRestTemplateTests {
 		ResponseEntity<String> response = this.restTemplate.getForEntity(this.base.toString() + "/hello", String.class,
 				"");
 		String respString = response.getBody();
-		assertThat(respString).isEqualTo(IndexController.Succ);
+		assertThat(respString).isEqualTo(HelloController.Succ);
 	}
 	
 	@Test
