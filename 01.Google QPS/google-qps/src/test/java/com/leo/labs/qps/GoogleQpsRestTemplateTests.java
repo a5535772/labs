@@ -3,6 +3,8 @@ package com.leo.labs.qps;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,26 +45,73 @@ public class GoogleQpsRestTemplateTests {
 				"");
 		String respString = response.getBody();
 		assertThat(respString).isEqualTo(HelloController.Succ);
+
+		Thread.sleep(2000l);
 	}
-	
+
+	/**
+	 * 由于springboot启动需要加载时间，在这短时间内 RateLimiter 早已初始化完成，并就行了N秒的等待，所以这里初始化之后，一开始可以通过两个
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void getHelloLimitedTest() throws Exception {
-//		String respBody1 = getHelloLimited();
-//		String respBody2 = getHelloLimited();
-//		String respBody3 = getHelloLimited();
-//		assertThat(respBody1).isEqualTo(IndexController.Succ);
-//		assertThat(respBody2).isEqualTo(IndexController.Succ);
-//		assertThat(respBody3).isEqualTo(IndexController.Fail);
-		for (int i = 0; i <10; i++) {
-			System.out.println(getHelloLimited());
-		}
+	public void will_get_2_succ_when_not_sleep() throws Exception {
+		List<String> list = new ArrayList<>();
+
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+
+		assertThat(list.get(0)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(1)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(2)).isEqualTo(HelloController.Fail);
+		assertThat(list.get(3)).isEqualTo(HelloController.Fail);
+
+		Thread.sleep(2000l);
+	}
+
+	@Test
+	public void will_get_3_succ_when_sleep_1_second_after_2_succ() throws Exception {
+		List<String> list = new ArrayList<>();
+
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+		Thread.sleep(1000l);
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+
+		assertThat(list.get(0)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(1)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(2)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(3)).isEqualTo(HelloController.Fail);
+
+		Thread.sleep(2000l);
+	}
+
+	@Test
+	public void will_get_4_succ_when_sleep_2_second_after_2_succ() throws Exception {
+		List<String> list = new ArrayList<>();
+
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+		Thread.sleep(2000l);
+		list.add(getHelloLimited());
+		list.add(getHelloLimited());
+
+		assertThat(list.get(0)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(1)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(2)).isEqualTo(HelloController.Succ);
+		assertThat(list.get(3)).isEqualTo(HelloController.Succ);
+
+		Thread.sleep(2000l);
 	}
 
 	private String getHelloLimited() {
-		String respBody=null;
-			ResponseEntity<String> resp = this.restTemplate.getForEntity(this.base.toString() + "/helloLimited", String.class,
-					"");
-			respBody= resp.getBody();
+		String respBody = null;
+		ResponseEntity<String> resp = this.restTemplate.getForEntity(this.base.toString() + "/helloLimited",
+				String.class, "");
+		respBody = resp.getBody();
 		return respBody;
-	}	
+	}
 }

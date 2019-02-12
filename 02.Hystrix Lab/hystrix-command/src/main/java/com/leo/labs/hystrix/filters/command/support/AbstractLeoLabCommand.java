@@ -16,7 +16,6 @@ import com.netflix.hystrix.HystrixThreadPoolProperties;
  * <li>https://www.jianshu.com/p/39763a0bd9b8</li>
  * <li>https://www.jianshu.com/p/6e9619cbdfc3?tdsourcetag=s_pctim_aiomsg</li>
  * <li><code>AbstractRibbonCommand</code></li>
- * <li>阿里巴巴</li>
  * 
  * @author LeoZhangli
  *
