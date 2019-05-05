@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration = com.leo.labs.start.jar.demo.uid.properties.auto.configure.StartUidStaterAutoConfigure
