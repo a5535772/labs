@@ -18,7 +18,7 @@ import com.leo.labs.start.jar.demo.uid.properties.StartUidProperties;
  *
  */
 @Configuration
-@ConditionalOnClass(DefaultUidGenerator.class)
+@ConditionalOnClass(UidGenerator.class)
 @EnableConfigurationProperties(StartUidProperties.class)
 @ConditionalOnProperty(prefix = "startuid", value = "enabled", matchIfMissing = true)
 public class StartUidStaterAutoConfigure {
