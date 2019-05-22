@@ -58,6 +58,9 @@ public class RibbonClientManager {
 	private static ConcurrentHashMap<String, DynamicServerListLoadBalancer<DiscoveryEnabledServer>> lbServerMap = new ConcurrentHashMap<>();
 
 	public void initByAppName(String appName) {
+		if(lbServerMap.get(appName)!=null) {
+			return;
+		}
 		DefaultClientConfigImpl config = DefaultClientConfigImpl.getClientConfigWithDefaultValues();
 
 		DynamicServerListLoadBalancer<DiscoveryEnabledServer> lb = new DynamicServerListLoadBalancer<DiscoveryEnabledServer>(
