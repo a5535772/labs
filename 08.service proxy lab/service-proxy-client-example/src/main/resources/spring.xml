@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+	<!-- 配对开始 UserApi -->
+	<!-- 分组的实际类 -->
+	<!-- 可以理解为dubbo的分组的类 -->
+	<bean id="RWUserApi" class="com.leo.labs.serviceproxy.client.example.user.api.UserApiImpl"></bean>
+	<bean id="MGUserApi" class="com.leo.labs.serviceproxy.client.example.user.api.UserApiImpl"></bean>
+	<!-- agent 实际处理业务的类 -->
+	<bean class="com.leo.labs.serviceproxy.core.agent.InterfacePorxy">
+		<property name="proxyClzStr"
+			value="com.leo.labs.serviceproxy.server.user.api.UserApi"></property>
+		<property name="apiRouteMap">
+			<map>
+				<entry key="RW" value-ref="RWUserApi" />
+				<entry key="MG" value-ref="MGUserApi" />
+			</map>
+		</property>
+	</bean>
+	<!-- 配对结束 UserApi -->
+	
+	<!-- 配对开始 OrderApi -->
+	<bean id="RWOrderApi" class="com.leo.labs.serviceproxy.client.example.user.api.OrderApiImpl"></bean>
+	<bean id="MGOrderApi" class="com.leo.labs.serviceproxy.client.example.user.api.OrderApiImpl"></bean>
+	<!-- agent 实际处理业务的类 -->
+	<bean class="com.leo.labs.serviceproxy.core.agent.InterfacePorxy">
+		<property name="proxyClzStr"
+			value="com.leo.labs.serviceproxy.server.user.api.OrderApi"></property>
+		<property name="apiRouteMap">
+			<map>
+				<entry key="RW" value-ref="RWOrderApi" />
+				<entry key="MG" value-ref="MGOrderApi" />
+			</map>
+		</property>
+	</bean>
+	<!-- 配对结束 OrderApi -->	
+
+
+	<!--接口Proxy的加载器，只需要配置一个 -->
+	<bean id="proxyLoader" class="com.leo.labs.serviceproxy.core.loader.SimpleProxyLoader">
+		<!-- 加载的代理接口，按需配置 -->
+		<property name="apis">
+			<list>
+				<value>com.leo.labs.serviceproxy.server.user.api.UserApi</value>
+				<value>com.leo.labs.serviceproxy.server.user.api.OrderApi</value>
+			</list>
+		</property>
+		<property name="clientAgent" ref="simpleClientAgent">
+		</property>
+	</bean>
+
+	<!-- 动态代理器，总代理，只需要配置一个 -->
+	<bean id="simpleClientAgent" class="com.leo.labs.serviceproxy.core.agent.SimpleClientAgent">
+	</bean>
+	<!-- 客户端代理器自动装载器 -->
+	<bean id="routeProxyClientAutowirer"
+		class="com.leo.labs.serviceproxy.core.client.RouteProxyClientAutowirer">
+	</bean>
+
+</beans>
