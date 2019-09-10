@@ -5,11 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.leo.labs.oauth2.browser.authentication.LabsAuthenctiationFailureHandler;
+import com.leo.labs.oauth2.browser.authentication.LabsAuthenticationSuccessHandler;
 import com.leo.labs.oauth2.core.properties.SecurityProperties;
 import com.leo.labs.oauth2.core.userdetails.SimpleInternalMemoryUserDetailsService;
 
@@ -18,11 +19,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	SecurityProperties securityProperties;
 
+	@Autowired
+	private LabsAuthenticationSuccessHandler labsAuthenticationSuccessHandler;//成功处理器
+	@Autowired
+	private LabsAuthenctiationFailureHandler labsAuthenctiationFailureHandler;//失败处理器
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public UserDetailsService browserUserDetailsService() {
 		return new SimpleInternalMemoryUserDetailsService();
@@ -36,6 +42,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 															// /login 详见 @code
 															// UsernamePasswordAuthenticationFilter
 															// 的构造函数
+				.successHandler(labsAuthenticationSuccessHandler)// 登录成功后的handler，默认是
+																	// ForwardAuthenticationSuccessHandler 详见
+																	// FormLoginConfigurer
+				.failureHandler(labsAuthenctiationFailureHandler)//失败处理器
 				.and().authorizeRequests()// 授权的页面中的此类请求
 				.antMatchers("/authentication/require"// 登录响应的URL
 						, securityProperties.getBrowser().getLoginPage())// 登录页面地址
