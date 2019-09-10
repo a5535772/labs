@@ -22,6 +22,7 @@
 		<module>spring-oauth2-03-consumer-loginpage</module>
 		<module>spring-oauth2-core</module>
 		<module>spring-oauth2-04-with-out-hard-code</module>
+		<module>spring-oauth2-04-core</module>
 	</modules>
 
 	<properties>
