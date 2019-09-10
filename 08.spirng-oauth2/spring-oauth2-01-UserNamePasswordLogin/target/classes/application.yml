@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: labs-oauth2-spring-oauth2-01-UserNamePasswordLogin
-
-server:
-  port: 8080
-  
-security:  basic:    enabled: true
-  
