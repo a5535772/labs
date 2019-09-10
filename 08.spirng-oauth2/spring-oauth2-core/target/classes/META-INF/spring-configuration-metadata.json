@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.leo.labs.oauth2.core.properties.SecurityProperties",
+      "name": "labs.security.properties",
+      "type": "com.leo.labs.oauth2.core.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.leo.labs.oauth2.core.properties.SecurityProperties",
+      "name": "labs.security.properties.browser",
+      "type": "com.leo.labs.oauth2.core.properties.BrowserProperties"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: labs-oauth2-spring-oauth2-03-consumer-loginpage
+
+server:
+  port: 8080
+  
+security:  basic:    enabled: true

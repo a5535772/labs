@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: labs-oauth2-provider-web
+server:
+  port: 8080

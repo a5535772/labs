@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: labs-oauth2-provider
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/oauth2?useSSL=true
+    username: root
+    password: 123456
+    driver-class: com.mysql.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create    
+server:
+  port: 8080
+  
+  
