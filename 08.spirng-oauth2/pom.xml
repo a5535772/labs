@@ -14,17 +14,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>spring-oauth2-provider-web</module>
-		<module>spring-oauth2-provider</module>
 		<module>spring-oauth2-01-UserNamePasswordLogin</module>
 		<module>spring-oauth2-02-consumer-userdetails</module>
 		<module>spring-oauth2-02-consumer-loginpage</module>
 		<module>spring-oauth2-03-consumer-loginpage</module>
-		<module>spring-oauth2-core</module>
 		<module>spring-oauth2-04-with-out-hard-code</module>
 		<module>spring-oauth2-04-core</module>
 		<module>spring-oauth2-05-invite-code-login</module>
 		<module>spring-oauth2-05-core</module>
+		<module>spring-oauth2-06-custom-login</module>
+		<module>spring-oauth2-06-core</module>
 	</modules>
 
 	<properties>
