@@ -3,35 +3,36 @@ package com.leo.labs.oauth2.core.userdetails;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
+public class SimpleInternalMemoryUserDetailsService implements UserDetailsService, InitializingBean {
+	private Logger logger = org.slf4j.LoggerFactory.getLogger(SimpleInternalMemoryUserDetailsService.class);
 
-public class SimpleInternalMemoryUserDetailsService implements UserDetailsService,InitializingBean{
 	private Map<String, SimpleUserDetails> simpleUserDetailsMap = new ConcurrentHashMap<>();
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("username is " + username);
+	public UserDetails loadUserByUsername(String username) {
+		logger.info("username is {}", username);
 		UserDetails userDetails = simpleUserDetailsMap.get(username);
-
-		if (userDetails == null)
+		if (ObjectUtils.isEmpty(userDetails))
 			throw new UsernameNotFoundException("Unknown user");
-		System.out.println("userDetails is "+userDetails.toString());
+		logger.info("userDetails is {}", userDetails);
 		return userDetails;
 	}
 
 	private SimpleUserDetails buildSimpleUserDetails(String userName) {
 		SimpleUserDetails simpleUserDetails = new SimpleUserDetails();
-		simpleUserDetails.setUserName(userName);
+		simpleUserDetails.setUsername(userName);
 		simpleUserDetails.setPassword(passwordEncoder.encode("123456"));
 		return simpleUserDetails;
 	}
@@ -39,7 +40,7 @@ public class SimpleInternalMemoryUserDetailsService implements UserDetailsServic
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		simpleUserDetailsMap.put("zhangsan", buildSimpleUserDetails("zhangsan"));
-		
+
 	}
 
 }

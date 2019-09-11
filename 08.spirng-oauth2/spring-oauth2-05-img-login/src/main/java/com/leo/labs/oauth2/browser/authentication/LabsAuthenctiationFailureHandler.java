@@ -24,13 +24,19 @@ import com.leo.labs.oauth2.core.properties.LoginResponseType;
 import com.leo.labs.oauth2.core.properties.SecurityProperties;
 
 /**
- * @author zhailiang
- *
+ * 
+ * <一句话功能简述>
+ * @Title: LabsAuthenctiationFailureHandler.java
+ * @Description: <功能详细描述>
+ * @author  Leo Zhang
+ * @date 2019年9月11日下午12:12:36
+ * @see  [相关类/方法]
+ * @since  [产品/模块版本]
  */
 @Component("labsAuthenctiationFailureHandler")
 public class LabsAuthenctiationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -45,7 +51,7 @@ public class LabsAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		logger.info("登录失败");
+		log.info("登录失败");
 		
 		if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
 			if(exception instanceof BadCredentialsException) {

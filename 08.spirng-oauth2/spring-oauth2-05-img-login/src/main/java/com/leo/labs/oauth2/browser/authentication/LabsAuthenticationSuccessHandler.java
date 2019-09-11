@@ -33,7 +33,7 @@ import com.leo.labs.oauth2.core.properties.SecurityProperties;
 @Component("labsAuthenticationSuccessHandler")
 public class LabsAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -53,7 +53,7 @@ public class LabsAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-		logger.info("登录成功");
+		log.info("登录成功");
 
 		if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
 			response.setContentType("application/json;charset=UTF-8");

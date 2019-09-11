@@ -24,7 +24,7 @@ import com.leo.labs.oauth2.core.properties.SecurityProperties;
 
 @RestController
 public class BrowserSecurityController {
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private RequestCache requestCache = new HttpSessionRequestCache();// http请求缓存工具
 
@@ -40,7 +40,7 @@ public class BrowserSecurityController {
 		if (savedRequest != null) {
 			String targetURL = savedRequest.getRedirectUrl();
 			if (StringUtils.endsWithIgnoreCase(targetURL, ".html")) {
-				logger.info("即将跳转到登录页面");
+				log.info("即将跳转到登录页面");
 				redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
 			}
 		}

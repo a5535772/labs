@@ -6,14 +6,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
 /**
  * 
  * @Title: SimpleUserDetails.java
  * @Description: just a Simple UserDetails
- * @author  Leo Zhang
+ * @author Leo Zhang
  * @date 2019年9月9日下午2:37:38
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @see [相关类/方法]
+ * @since [产品/模块版本]
  */
 public class SimpleUserDetails implements UserDetails {
 
@@ -22,22 +23,19 @@ public class SimpleUserDetails implements UserDetails {
 	 */
 	private static final long serialVersionUID = -8524169405106032460L;
 
-	private String userName;
+	private String username;
 
 	private String password;
 
 	private User user;
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
 	}
 
 	public User getUser() {
@@ -48,25 +46,13 @@ public class SimpleUserDetails implements UserDetails {
 		this.user = user;
 	}
 
-	/**
-	 * 重写getAuthorities方法，将用户的角色作为权限
-	 */
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		// TODO 后续带完善，可以根据 普通用户、vip、授权用户等进行设置
-//TODO 也可以业务解耦，这里可以不全是权限范围，有统一服务提供
-		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_SUPER");
-	}
-
-	@Override
-	public String getPassword() {
-		return password;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
 	public String getUsername() {
-		return userName;
+		return username;
 	}
 
 	@Override
@@ -89,11 +75,14 @@ public class SimpleUserDetails implements UserDetails {
 		return true;
 	}
 
+	/**
+	 * 重写getAuthorities方法，将用户的角色作为权限
+	 */
 	@Override
-	public String toString() {
-		return "SimpleUserDetails [userName=" + userName + ", password=" + password + ", user=" + user + "]";
-	}
-	
-	
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 
+		/** 后续带完善，可以根据 普通用户、vip、授权用户等进行设置 */
+		/** 也可以业务解耦，这里可以不全是权限范围，有统一服务提供 */
+		return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_SUPER");
+	}
 }
