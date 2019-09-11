@@ -23,7 +23,7 @@ public class SecurityConstants {
 	 */
 	public static final String DEFAULT_VALIDATE_CODE_URL_PREFIX = "/code";
 	/**
-	 * 当请求需要身份认证时，默认跳转的url
+	 * 当请求需要身份认证时，默认跳转的url，即登录页的地址
 	 * 
 	 * @see SecurityController
 	 */

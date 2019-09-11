@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leo.labs.oauth2.browser.support.SimpleResponse;
+import com.leo.labs.oauth2.core.properties.SecurityConstants;
 import com.leo.labs.oauth2.core.properties.SecurityProperties;
 
 @RestController
@@ -32,7 +33,7 @@ public class BrowserSecurityController {
 	@Autowired
 	private SecurityProperties securityProperties;
 
-	@RequestMapping("/authentication/require")
+	@RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
 	public SimpleResponse requireAuthentications(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {

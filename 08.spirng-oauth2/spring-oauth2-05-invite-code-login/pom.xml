@@ -5,7 +5,7 @@
     <artifactId>spring-oauth2-root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-oauth2-05-img-login</artifactId>
+  <artifactId>spring-oauth2-05-invite-code-login</artifactId>
   
   
 	<properties>
