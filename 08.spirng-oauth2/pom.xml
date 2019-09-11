@@ -23,6 +23,8 @@
 		<module>spring-oauth2-core</module>
 		<module>spring-oauth2-04-with-out-hard-code</module>
 		<module>spring-oauth2-04-core</module>
+		<module>spring-oauth2-05-img-login</module>
+		<module>spring-oauth2-05-core</module>
 	</modules>
 
 	<properties>
