@@ -4,6 +4,8 @@
 package com.leo.labs.oauth2.core.social.qq.api;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
 
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @since [产品/模块版本]
  */
 public class QQImpl extends AbstractOAuth2ApiBinding implements QQApi {
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	/** 根据access_token获取用户open_id */
 	private static final String URL_GET_OPENID = "https://graph.qq.com/oauth2.0/me?access_token=%s";
 	/**
@@ -41,7 +44,7 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQApi {
 		String url = String.format(URL_GET_OPENID, accessToken);
 		String result = getRestTemplate().getForObject(url, String.class);
 
-		System.out.println(result);
+		logger.info(result);
 
 		this.openId = StringUtils.substringBetween(result, "\"openid\":\"", "\"}");
 	}
@@ -51,7 +54,7 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQApi {
 		String url = String.format(URL_GET_USERINFO, appId, openId);
 		String result = getRestTemplate().getForObject(url, String.class);
 
-		System.out.println(result);
+		logger.info(result);
 
 		QQUserInfo userInfo = null;
 		try {

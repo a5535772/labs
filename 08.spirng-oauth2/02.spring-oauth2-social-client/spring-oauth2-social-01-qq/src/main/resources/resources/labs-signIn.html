@@ -26,7 +26,7 @@
 			</tr>
 		</table>
 	</form>
-	
+
 	<h3>短信登录</h3>
 	<form action="/authentication/mobile" method="post">
 		<table>
@@ -43,5 +43,17 @@
 			</tr>
 		</table>
 	</form>
+	<p />
+	<h3>社交登录</h3>
+	<!-- /auth/qq -->
+	<!-- /auth @see org.springframework.social.security.SocialAuthenticationFilter -->
+	<!-- /qq @see appid -->
+	<a href="/auth/qq">默认Spring的QQ登录</a>
+	<p />
+
+
+	<a href="/qqLogin/callback.do">自定义的QQ登录</a>
+	<p />
+	<a href="/qqLogin/weixin">微信登录</a>
 </body>
 </html>
