@@ -16,6 +16,7 @@
 	<modules>
 		<module>spring-oauth2-social-01-qq</module>
 		<module>spring-oauth2-social-01-core</module>
+		<module>spring-oauth2-social-02-justatest</module>
 	</modules>
 
 	<properties>
