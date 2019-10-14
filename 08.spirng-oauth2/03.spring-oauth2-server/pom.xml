@@ -14,6 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+	<module>spring-oauth2-server-authorization-server</module>
+	<module>spring-oauth2-server-resource-server</module>
 	</modules>
 
 	<properties>
