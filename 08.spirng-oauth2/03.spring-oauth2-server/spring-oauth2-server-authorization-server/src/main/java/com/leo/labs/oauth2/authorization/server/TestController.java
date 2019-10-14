@@ -10,6 +10,10 @@ public class TestController {
 	public String hello() {
 		return "1";
 	}
+	@GetMapping("/oauth/abc")
+	public String abc() {
+		return "1";
+	}	
 	
 	@GetMapping("/user/me")
 	public Object getCurrentUser() {

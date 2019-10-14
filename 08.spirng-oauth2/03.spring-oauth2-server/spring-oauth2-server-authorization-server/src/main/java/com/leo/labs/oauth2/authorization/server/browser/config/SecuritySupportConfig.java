@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import com.leo.labs.oauth2.core.userdetails.SimpleInternalMemoryUserDetailsService;
+import com.leo.labs.oauth2.core.web.filters.pre.LabUserTokenAuthorizeFilter;
 
 @Configuration
 public class SecuritySupportConfig {
@@ -37,6 +38,11 @@ public class SecuritySupportConfig {
 	@Bean // 声明 JdbcAuthorizationCodeServices，使用数据库存储授权码
 	public JdbcAuthorizationCodeServices jdbcAuthorizationCodeServices() {
 		return new JdbcAuthorizationCodeServices(dataSource);
+	}
+
+	@Bean
+	public LabUserTokenAuthorizeFilter labUserTokenAuthorizeFilter() {
+		return new LabUserTokenAuthorizeFilter();
 	}
 
 	@Bean

@@ -13,7 +13,17 @@ http://127.0.0.1:8080/oauth/authorize
  
  
  重要的类
-类：org.springframework.security.oauth2.provider.endpointTokenEndpoint
+★★★★★ 
+类：org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint 
+作用:管理 /oauth/authorize 流程
+
+★★★★★ 
+类：org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
 作用:管理 /oauth/token 流程
+
+★★
+类：org.springframework.security.oauth2.provider.endpoint.WhitelabelApprovalEndpoint
+作用:管理 /oauth/confirm_access 流程
  
 类：org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices
+类：org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices
