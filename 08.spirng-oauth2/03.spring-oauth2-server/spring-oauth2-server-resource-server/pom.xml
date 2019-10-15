@@ -16,6 +16,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- project 依赖 -->
+		<dependency>
+			<groupId>com.leo.labs</groupId>
+			<artifactId>spring-oauth2-server-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Sping boot 基本项 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

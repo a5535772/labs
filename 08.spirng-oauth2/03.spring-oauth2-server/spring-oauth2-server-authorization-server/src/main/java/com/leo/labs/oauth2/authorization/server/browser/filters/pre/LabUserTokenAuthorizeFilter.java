@@ -1,4 +1,4 @@
-package com.leo.labs.oauth2.core.web.filters.pre;
+package com.leo.labs.oauth2.authorization.server.browser.filters.pre;
 
 import java.io.IOException;
 
@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +20,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.google.gson.Gson;
+import com.leo.labs.oauth2.core.security.authentication.LabSimpleAuthenticationToken;
 
 public class LabUserTokenAuthorizeFilter extends OncePerRequestFilter {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -53,9 +53,17 @@ public class LabUserTokenAuthorizeFilter extends OncePerRequestFilter {
 		return simpleInternalMemoryUserDetailsService.loadUserByUsername(labUserToken);
 	}
 
+//	private Authentication buildTemplateAuthentication(HttpServletRequest request, UserDetails userDetails) {
+//
+//		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+//				userDetails.getAuthorities());
+//		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//		return authentication;
+//	}
+
 	private Authentication buildTemplateAuthentication(HttpServletRequest request, UserDetails userDetails) {
 
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+		LabSimpleAuthenticationToken authentication = new LabSimpleAuthenticationToken(userDetails,
 				userDetails.getAuthorities());
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		return authentication;

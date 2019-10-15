@@ -15,8 +15,9 @@ import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeSe
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import com.leo.labs.oauth2.authorization.server.browser.filters.pre.LabUserTokenAuthorizeFilter;
+import com.leo.labs.oauth2.core.support.SecurityConstants;
 import com.leo.labs.oauth2.core.userdetails.SimpleInternalMemoryUserDetailsService;
-import com.leo.labs.oauth2.core.web.filters.pre.LabUserTokenAuthorizeFilter;
 
 @Configuration
 public class SecuritySupportConfig {
@@ -32,7 +33,9 @@ public class SecuritySupportConfig {
 
 	@Bean // 声明TokenStore实现，使用redis存储授权的token
 	public TokenStore redisTokenStore() {
-		return new RedisTokenStore(redisConnectionFactory);
+		RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+		redisTokenStore.setPrefix(SecurityConstants.REDIS_USER_TOKEN_PREFIX);
+		return redisTokenStore;
 	}
 
 	@Bean // 声明 JdbcAuthorizationCodeServices，使用数据库存储授权码

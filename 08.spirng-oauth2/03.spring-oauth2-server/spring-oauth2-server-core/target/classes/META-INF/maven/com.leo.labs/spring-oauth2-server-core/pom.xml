@@ -7,7 +7,7 @@
 		<artifactId>spring-oauth2-server-root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>spring-oauth2-server-authorization-server</artifactId>
+	<artifactId>spring-oauth2-server-core</artifactId>
 
 
 	<properties>
@@ -16,19 +16,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- project 依赖 -->
-		<dependency>
-			<groupId>com.leo.labs</groupId>
-			<artifactId>spring-oauth2-server-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
 		<!-- Sping boot 基本项 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,39 +28,10 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--使用redis管理session -->
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session</artifactId>
-		</dependency>
-
 		<!-- spirng security basics -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
-
-		<!-- jdbc -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-
-		<!-- redis -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 		<!-- 工具类 -->
@@ -86,12 +45,5 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-		<!-- 热部署工具 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-
 	</dependencies>
 </project>

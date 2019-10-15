@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.leo.labs.oauth2.core.web.filters.pre.LabUserTokenAuthorizeFilter;
+import com.leo.labs.oauth2.authorization.server.browser.filters.pre.LabUserTokenAuthorizeFilter;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {

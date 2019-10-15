@@ -16,6 +16,7 @@
 	<modules>
 	<module>spring-oauth2-server-authorization-server</module>
 	<module>spring-oauth2-server-resource-server</module>
+	<module>spring-oauth2-server-core</module>
 	</modules>
 
 	<properties>
