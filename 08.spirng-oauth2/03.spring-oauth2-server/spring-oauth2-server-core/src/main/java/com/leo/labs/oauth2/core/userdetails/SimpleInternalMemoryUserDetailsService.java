@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ import org.springframework.util.ObjectUtils;
  * @since  [产品/模块版本]
  */
 public class SimpleInternalMemoryUserDetailsService implements UserDetailsService, InitializingBean {
-	private Logger logger = org.slf4j.LoggerFactory.getLogger(SimpleInternalMemoryUserDetailsService.class);
+	private Logger logger =LoggerFactory.getLogger(SimpleInternalMemoryUserDetailsService.class);
 
 	private Map<String, SimpleUserDetails> simpleUserDetailsMap = new ConcurrentHashMap<>();
 
