@@ -1,4 +1,4 @@
-package com.leo.labs.oauth2.zuul.resource.server.browser.config;
+package com.leo.labs.oauth2.zuul.resource.server.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import com.leo.labs.oauth2.core.support.SecurityConstants;
-import com.leo.labs.oauth2.zuul.resource.server.provider.token.LabResourceServerTokenServices;
+import com.leo.labs.oauth2.zuul.resource.server.security.provider.token.LabResourceServerTokenServices;
 
 @Configuration
 public class SecuritySupportConfig {

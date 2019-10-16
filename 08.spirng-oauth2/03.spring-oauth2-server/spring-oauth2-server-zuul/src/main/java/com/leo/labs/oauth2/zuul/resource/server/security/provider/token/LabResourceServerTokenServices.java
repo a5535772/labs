@@ -1,4 +1,4 @@
-package com.leo.labs.oauth2.zuul.resource.server.provider.token;
+package com.leo.labs.oauth2.zuul.resource.server.security.provider.token;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

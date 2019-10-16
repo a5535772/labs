@@ -20,10 +20,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://127.0.0.1:8080/oauth/authorize?response_type=code&client_id=leo-lab-client-id&redirect_uri=http://www.baidu.com&scope=all",
 					"protocol": "http",
@@ -65,10 +61,6 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://127.0.0.1:8080/oauth/authorize?user_oauth_approval=true&scope.all=true&authorize=Authorize",
 					"protocol": "http",
@@ -148,7 +140,7 @@
 						},
 						{
 							"key": "code",
-							"value": "B4gpmO",
+							"value": "Ye1WeD",
 							"type": "text"
 						},
 						{
@@ -212,7 +204,7 @@
 						},
 						{
 							"key": "refresh_token",
-							"value": "ce7d5cdd-33a3-4910-9e64-9704448f5002",
+							"value": "a69d5a51-2795-41d9-85c0-c688ed148e00",
 							"type": "text"
 						},
 						{
@@ -235,6 +227,119 @@
 					"path": [
 						"oauth",
 						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.资源服务器-Hello",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "02f08dd2-ff57-4994-9544-d17657316d81",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "queryParams",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/hello",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.资源服务器-我的信息",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "02f08dd2-ff57-4994-9544-d17657316d81",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "queryParams",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/user/me1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"user",
+						"me1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.zuul-自主认证-转发",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "42985a4c-c2d5-4bc6-997d-0a2ce9ef534e",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "queryParams",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8099/baidu/abc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8099",
+					"path": [
+						"baidu",
+						"abc"
 					]
 				}
 			},
