@@ -1,0 +1,57 @@
+DELETE students
+
+PUT students
+{
+  "mappings":{
+    "properties": {
+      "id":{"type": "keyword"},
+      "name":{"type": "keyword"},
+      "gender":{"type": "keyword"},
+      "courseList":{
+        "properties":{
+          "name":{
+            "type":"keyword"
+          },
+          "score":{
+            "type":"integer"
+          }
+          
+        }
+      }
+    }
+  }
+}
+
+PUT students
+{
+  "mappings":{
+    "properties": {
+      "id":{"type": "keyword"},
+      "name":{
+        "type": "text",
+        "analyzer":"ik_max_word",
+        "fields": {
+          "raw":{
+            "type":"keyword"
+          },
+          "length":{
+            "type":"token_count",
+            "analyzer":"standard"
+          }
+        }
+      },
+      "gender":{"type": "keyword"},
+      "courseList":{
+        "properties":{
+          "name":{
+            "type":"keyword"
+          },
+          "score":{
+            "type":"integer"
+          }
+          
+        }
+      }
+    }
+  }
+}

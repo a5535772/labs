@@ -1,0 +1,22 @@
+curl -XPUT 'localhost:9200/test/person/_mapping?pretty' -d'
+{
+  "person": {
+    "properties": {
+      "file": {
+        "type": "attachment",
+        "fields": {
+          "content": {
+            "language" : "zh_cn",
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word",
+            "include_in_all": "true",
+            "boost": 8,
+            "term_vector":"with_positions_offsets",
+            "store": true
+          }
+        }
+      }
+    }
+  }
+}'

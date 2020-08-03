@@ -1,0 +1,1 @@
+min max avg 函数怎么做的
