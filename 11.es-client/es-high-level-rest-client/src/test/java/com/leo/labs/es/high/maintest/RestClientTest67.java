@@ -21,6 +21,15 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 
+/**
+ * <阿里云客户端demo>
+ * @Title: RestClientTest67.java
+ * @Description: <功能详细描述>
+ * @author  Leo Zhang
+ * @date 2020年8月4日下午12:20:16
+ * @see  [相关类/方法]
+ * @since  [产品/模块版本]
+ */
 public class RestClientTest67 {
 
     private static final RequestOptions COMMON_OPTIONS;

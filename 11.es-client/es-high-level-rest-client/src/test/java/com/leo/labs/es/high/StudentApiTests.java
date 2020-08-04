@@ -47,12 +47,13 @@ public class StudentApiTests {
 		studentList.add(getWangWu());
 		BulkResponse bulkResponse = studentApi.addByList(studentList);
 		System.out.println("==========================");
+
 		for (BulkItemResponse bulkItemResponse : bulkResponse.getItems()) {
-			System.out.println(new Gson().toJson(bulkItemResponse));
+			System.out.println(bulkItemResponse.getResponse().toString());
 		}
 		System.out.println("==========================");
 	}
-	
+
 	@Test
 	public void search() throws Exception {
 		SearchResponse zhangsanResponse = studentApi.search(getZhangSan());
@@ -61,9 +62,8 @@ public class StudentApiTests {
 		System.out.println(zhangsanResponse.toString());
 		System.out.println(lisiResponse.toString());
 		System.out.println("==========================");
-		
-	
-	}	
+
+	}
 
 	Student getZhangSan() {
 		Student student = new Student("100000000001", "张三", "male");
