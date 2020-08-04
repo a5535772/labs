@@ -1,1 +1,5 @@
 min max avg 函数怎么做的
+
+
+ElasticSearch 拼音和中文搜索
+https://www.jianshu.com/p/3664dc78d939

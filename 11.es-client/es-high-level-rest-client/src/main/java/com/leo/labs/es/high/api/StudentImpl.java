@@ -9,12 +9,12 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -24,7 +24,6 @@ import com.leo.labs.es.high.es.HighLevelClientPool;
 @Service
 public class StudentImpl implements StudentApi {
 	@Autowired
-	@Qualifier("simpleHighLevelClientPool")
 	HighLevelClientPool clientPool;
 
 	private static final String STUDENT_INDEX = "students";
@@ -44,7 +43,7 @@ public class StudentImpl implements StudentApi {
 		RestHighLevelClient client = clientPool.get();
 		IndexResponse indexResponse = null;
 		try {
-			indexResponse = client.index(indexRequest);
+			indexResponse = client.index(indexRequest,RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -71,7 +70,7 @@ public class StudentImpl implements StudentApi {
 		RestHighLevelClient client = clientPool.get();
 		BulkResponse bulkResponse = null;
 		try {
-			bulkResponse = client.bulk(bulkRequest);
+			bulkResponse = client.bulk(bulkRequest,RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -107,7 +106,7 @@ public class StudentImpl implements StudentApi {
 		RestHighLevelClient client = clientPool.get();
 		SearchResponse searchResponse = null;
 		try {
-			searchResponse = client.search(searchRequest);
+			searchResponse = client.search(searchRequest,RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

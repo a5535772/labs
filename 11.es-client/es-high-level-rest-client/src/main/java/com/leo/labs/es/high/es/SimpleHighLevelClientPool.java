@@ -5,9 +5,7 @@ import java.io.IOException;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.springframework.stereotype.Component;
 
-@Component("simpleHighLevelClientPool")
 public class SimpleHighLevelClientPool implements HighLevelClientPool {
 
 	@Override
