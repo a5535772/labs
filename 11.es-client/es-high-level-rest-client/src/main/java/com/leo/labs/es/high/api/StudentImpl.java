@@ -105,7 +105,6 @@ public class StudentImpl implements StudentApi {
 		searchSourceBuilder.query(QueryBuilders.termQuery("name", student.getName()));
 		searchSourceBuilder.from(0);
 		searchSourceBuilder.size(5);
-
 		// Add the SearchSourceBuilder to the SearchRequest.
 		searchRequest.source(searchSourceBuilder);
 
