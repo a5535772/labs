@@ -3,7 +3,7 @@ package com.leo.labs.es.high.es;
 import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
 import org.elasticsearch.client.RequestOptions;
 
-public class MyRequestOptions {
+public class CommonRequestOptions {
 	public static final RequestOptions COMMON_OPTIONS;
 
 	static {

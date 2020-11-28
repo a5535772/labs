@@ -51,7 +51,7 @@ public class RestClientTest74 {
 
 		// 通过builder创建rest client，配置http client的HttpClientConfigCallback。
 		// 单击所创建的Elasticsearch实例ID，在基本信息页面获取公网地址，即为ES集群地址。
-		RestClientBuilder builder = RestClient.builder(new HttpHost("http://es-cn-zz11rntq7000ms9hw.public.elasticsearch.aliyuncs.com", 9200))
+		RestClientBuilder builder = RestClient.builder(new HttpHost("es-cn-zz11rntq7000ms9hw.public.elasticsearch.aliyuncs.com", 9200))
 				.setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
 					@Override
 					public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
@@ -88,6 +88,7 @@ public class RestClientTest74 {
 
 		} catch (IOException ioException) {
 			// 异常处理。
+			ioException.printStackTrace();
 		}
 	}
 }

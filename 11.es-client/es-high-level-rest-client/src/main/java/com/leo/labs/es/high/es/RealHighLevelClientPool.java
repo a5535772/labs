@@ -8,6 +8,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @see https://blog.csdn.net/qq_41911762/article/details/102924263
+ * @see https://www.jianshu.com/p/b0189e01de35
  */
 public class RealHighLevelClientPool implements HighLevelClientPool {
 	GenericObjectPool<RestHighLevelClient> objectPool;

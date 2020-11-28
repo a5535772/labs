@@ -17,5 +17,7 @@ public interface StudentApi {
 	IndexResponse getById(String id);
 	
 	SearchResponse search(Student student);
+	
+	SearchResponse searchTest();
 
 }
