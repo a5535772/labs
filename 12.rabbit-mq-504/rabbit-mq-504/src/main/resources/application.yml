@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: rabbit-mq-504
+  rabbitmq:
+    host: 192.168.33.11
+    port: 5672
+    username: admin
+    #username: guest
+    password: admin
+    #指定虚拟机
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
+server:
+  port: 9100
+logging:
+  config: classpath:logback-spring.xml 
+ 
