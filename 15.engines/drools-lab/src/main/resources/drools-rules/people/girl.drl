@@ -1,0 +1,10 @@
+package com.example.demo.bean
+import com.example.demo.bean.People
+dialect  "java"
+
+rule "girl"
+    when
+        $p : People(sex == 2 && drlType == "people")
+    then
+        System.out.println($p.getName() + "是女孩");
+end
