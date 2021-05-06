@@ -57,7 +57,6 @@ public class HotSwaperInjecter {
             ctClass = pool.get(bean.getClass().getName());
             for (int i = 0; i < methodNames.length; i++) {
                 if (shouldJnject(methodNames[i])) {
-                    System.out.println("injecting +" + methodNames[i]);
                     CtMethod cm = ctClass.getDeclaredMethod(methodNames[i]);
                     cm.insertAt(1, "{System.out.println(\"hello HotSwapper.." + methodNames[i] + "\");}");
                 }
