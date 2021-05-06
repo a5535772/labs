@@ -39,7 +39,7 @@ public class HotSwaperInjecter {
         try {
             ctClass = pool.get(bean.getClass().getName());
             CtMethod ctMethod = ctClass.getDeclaredMethod(methodName);
-            ctMethod.insertAt(1, "{System.out.println(\"hello HotSwapper.." + methodName + "\");}");
+            ctMethod.insertAt(1, "{System.out.println(\"javassist ->  hello HotSwapper.." + methodName + "\");}");
             swap.reload(ctClass.getName(), ctClass.toBytecode());
         } catch (NotFoundException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class HotSwaperInjecter {
             for (int i = 0; i < methodNames.length; i++) {
                 if (shouldJnject(methodNames[i])) {
                     CtMethod cm = ctClass.getDeclaredMethod(methodNames[i]);
-                    cm.insertAt(1, "{System.out.println(\"hello HotSwapper.." + methodNames[i] + "\");}");
+                    cm.insertAt(1, "{System.out.println(\"javassist ->  hello HotSwapper.." + methodNames[i] + "\");}");
                 }
             }
             swap.reload(ctClass.getName(), ctClass.toBytecode());

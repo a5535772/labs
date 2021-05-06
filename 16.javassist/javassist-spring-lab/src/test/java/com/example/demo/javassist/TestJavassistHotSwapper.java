@@ -31,7 +31,7 @@ public class TestJavassistHotSwapper {
         CtClass ctClass = pool.get("com.example.demo.service.HelloImpl");
 
         CtMethod ctMethod = ctClass.getDeclaredMethod("hello");
-        ctMethod.insertAt(1, "{System.out.println(\"hello HotSwapper.\");}");
+        ctMethod.insertAt(1, "{System.out.println(\"javassist ->  hello HotSwapper.\");}");
 
         // Furthermore, JAVA_HOME/lib/tools.jar must be included in the class path.
         HotSwapper swap = new HotSwapper(8000);

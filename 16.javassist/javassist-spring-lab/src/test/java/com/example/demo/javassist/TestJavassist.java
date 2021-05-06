@@ -27,7 +27,7 @@ public class TestJavassist {
             String[] methodArgs = MethodVariableNameUtil.getMethodVariableName(ctMethod);
             if (methodArgs != null && methodArgs.length > 0) {
                 StringBuilder sb = new StringBuilder();
-                sb.append("{System.out.println(\"args are : \"");
+                sb.append("{System.out.println(\"javassist -> args are : \"");
                 sb.append(getBody(methodArgs));
                 sb.append("); }");
                 // ctMethod.insertBefore("{System.out.println(\"Hello.say():\"); }");

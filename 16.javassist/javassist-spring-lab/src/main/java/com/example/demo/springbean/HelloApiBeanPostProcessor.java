@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
  * how to use<br/>
  * 1.需要把tools.jar加到classpath<br/>
  * 2.增加JVM选项 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000<br/>
+ * PS加餐:可以看一下
+ * BeanPostProcessor的各种实现，FeignContextBeanPostProcessor和FeignBeanPostProcessorConfiguration组合配置了feign的trace
  * 
  * @author leo zhang
  *
