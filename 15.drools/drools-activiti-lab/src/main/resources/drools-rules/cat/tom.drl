@@ -1,0 +1,10 @@
+package com.example.demo.bean
+import com.example.demo.bean.Cat
+dialect  "java"
+
+rule "tom"
+    when
+        $c : Cat(name == "tom" )
+    then
+        System.out.println($c.getName() + "是汤姆猫");
+end
