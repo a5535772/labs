@@ -15,12 +15,11 @@
  */
 package com.alibaba.csp.sentinel.dashboard.repository.rule;
 
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
+import com.alibaba.csp.sentinel.dashboard.util.SnowFlakeUtil;
 import com.alibaba.csp.sentinel.slots.block.flow.ClusterFlowConfig;
-
-import org.springframework.stereotype.Component;
 
 /**
  * Store {@link FlowRuleEntity} in memory.
@@ -30,24 +29,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class InMemFlowRuleStore extends InMemoryRuleRepositoryAdapter<FlowRuleEntity> {
 
-    private static AtomicLong ids = new AtomicLong(0);
+	@Override
+	protected long nextId() {
+		return SnowFlakeUtil.nextId();
+	}
 
-    @Override
-    protected long nextId() {
-        return ids.incrementAndGet();
-    }
-
-    @Override
-    protected FlowRuleEntity preProcess(FlowRuleEntity entity) {
-        if (entity != null && entity.isClusterMode()) {
-            ClusterFlowConfig config = entity.getClusterConfig();
-            if (config == null) {
-                config = new ClusterFlowConfig();
-                entity.setClusterConfig(config);
-            }
-            // Set cluster rule id.
-            config.setFlowId(entity.getId());
-        }
-        return entity;
-    }
+	@Override
+	protected FlowRuleEntity preProcess(FlowRuleEntity entity) {
+		if (entity != null && entity.isClusterMode()) {
+			ClusterFlowConfig config = entity.getClusterConfig();
+			if (config == null) {
+				config = new ClusterFlowConfig();
+				entity.setClusterConfig(config);
+			}
+			// Set cluster rule id.
+			config.setFlowId(entity.getId());
+		}
+		return entity;
+	}
 }

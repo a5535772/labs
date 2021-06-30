@@ -15,6 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -30,10 +31,13 @@ import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
 import com.alibaba.csp.sentinel.dashboard.domain.Result;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.InMemoryRuleRepositoryAdapter;
+import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
+import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +64,14 @@ public class FlowControllerV1 {
 
     @Autowired
     private SentinelApiClient sentinelApiClient;
+    
+    @Autowired
+    @Qualifier("flowRuleNacosProvider")
+    private DynamicRuleProvider<List<FlowRuleEntity>> ruleProvider;
+    
+    @Autowired
+    @Qualifier("flowRuleNacosPublisher")
+    private DynamicRulePublisher<List<FlowRuleEntity>> rulePublisher;    
 
     @GetMapping("/rules")
     @AuthAction(PrivilegeType.READ_RULE)
@@ -77,9 +89,14 @@ public class FlowControllerV1 {
             return Result.ofFail(-1, "port can't be null");
         }
         try {
-            List<FlowRuleEntity> rules = sentinelApiClient.fetchFlowRuleOfMachine(app, ip, port);
-            rules = repository.saveAll(rules);
-            return Result.ofSuccess(rules);
+        	List<FlowRuleEntity> appNacosRules = getRulesFromNacosByApp(app);
+        	List<FlowRuleEntity> appClientRules = sentinelApiClient.fetchFlowRuleOfMachine(app, ip, port);
+        	List<FlowRuleEntity> mergedRules = mergedRules(appNacosRules,appClientRules); 
+        	mergedRules = repository.saveAll(mergedRules);
+            if(shouldPublishRules(appNacosRules.size(),mergedRules.size())) {
+            	publishRules(app, ip, port);
+            }        	
+            return Result.ofSuccess(mergedRules);
         } catch (Throwable throwable) {
             logger.error("Error when querying flow rules", throwable);
             return Result.ofThrowable(-1, throwable);
@@ -149,7 +166,7 @@ public class FlowControllerV1 {
         try {
             entity = repository.save(entity);
 
-            publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);
+            publishRules(entity.getApp(), entity.getIp(), entity.getPort());
             return Result.ofSuccess(entity);
         } catch (Throwable t) {
             Throwable e = t instanceof ExecutionException ? t.getCause() : t;
@@ -228,7 +245,7 @@ public class FlowControllerV1 {
                 return Result.ofFail(-1, "save entity fail: null");
             }
 
-            publishRules(entity.getApp(), entity.getIp(), entity.getPort()).get(5000, TimeUnit.MILLISECONDS);
+            publishRules(entity.getApp(), entity.getIp(), entity.getPort());
             return Result.ofSuccess(entity);
         } catch (Throwable t) {
             Throwable e = t instanceof ExecutionException ? t.getCause() : t;
@@ -256,7 +273,7 @@ public class FlowControllerV1 {
             return Result.ofFail(-1, e.getMessage());
         }
         try {
-            publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort()).get(5000, TimeUnit.MILLISECONDS);
+            publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort());
             return Result.ofSuccess(id);
         } catch (Throwable t) {
             Throwable e = t instanceof ExecutionException ? t.getCause() : t;
@@ -265,9 +282,45 @@ public class FlowControllerV1 {
             return Result.ofFail(-1, e.getMessage());
         }
     }
+    
+	private List<FlowRuleEntity> mergedRules(List<FlowRuleEntity> appNacosRules, List<FlowRuleEntity> appClientRules) {
+		List<FlowRuleEntity> mergedRules=new ArrayList<>();
+		mergedRules.addAll(appNacosRules);
+		
+		List<String> nacosFlowRuleResourceList =new ArrayList<>(appNacosRules.size());
+		
+		appNacosRules.forEach(appNacosRule->{
+			nacosFlowRuleResourceList.add(appNacosRule.getResource());
+		});
+		
+		appClientRules.forEach(appClientRule->{
+			if(!nacosFlowRuleResourceList.contains(appClientRule.getResource())) {
+				mergedRules.add(appClientRule);
+			}
+		});
+		return mergedRules;
+	}    
+	
+	private List<FlowRuleEntity> getRulesFromNacosByApp(String app) throws Exception {
+		List<FlowRuleEntity> rules = ruleProvider.getRules(app);
+		if (rules != null && !rules.isEmpty()) {
+		    for (FlowRuleEntity entity : rules) {
+		        entity.setApp(app);
+		        if (entity.getClusterConfig() != null && entity.getClusterConfig().getFlowId() != null) {
+		            entity.setId(entity.getClusterConfig().getFlowId());
+		        }
+		    }
+		}
+		return rules;
+	}
 
-    private CompletableFuture<Void> publishRules(String app, String ip, Integer port) {
-        List<FlowRuleEntity> rules = repository.findAllByMachine(MachineInfo.of(app, ip, port));
-        return sentinelApiClient.setFlowRuleOfMachineAsync(app, ip, port, rules);
+	private boolean shouldPublishRules(int orginNacosRuleSize, int mergedRuleSize) {
+		return orginNacosRuleSize != mergedRuleSize;
+	}
+
+    private void publishRules(String app, String ip, Integer port) throws Exception {
+        List<FlowRuleEntity> rules = repository.findAllByApp(app);
+        sentinelApiClient.setFlowRuleOfMachineAsync(app, ip, port, rules);
+        rulePublisher.publish(app, rules);
     }
 }
