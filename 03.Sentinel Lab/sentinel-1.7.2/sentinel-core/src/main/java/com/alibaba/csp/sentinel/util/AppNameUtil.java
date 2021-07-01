@@ -46,6 +46,7 @@ import java.io.File;
 public final class AppNameUtil {
 
     public static final String APP_NAME = "project.name";
+    public static final String SPRING_BOOT_APP_NAME = "spring.boot.project.name";
     public static final String SUN_JAVA_COMMAND = "sun.java.command";
     private static final String JAR_SUFFIX_LOWER = ".jar";
     private static final String JAR_SUFFIX_UPPER = ".JAR";
@@ -68,6 +69,13 @@ public final class AppNameUtil {
             return;
         }
 
+        // use -spring.boot.project.name second        
+        app = System.getProperty(SPRING_BOOT_APP_NAME);
+        if (!isEmpty(app)) {
+            appName = app;
+            return;
+        }
+        
         // parse sun.java.command property
         String command = System.getProperty(SUN_JAVA_COMMAND);
         if (isEmpty(command)) {
