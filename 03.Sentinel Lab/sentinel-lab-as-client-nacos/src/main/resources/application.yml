@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: sentinel-lab-as-client-nacos
+server:
+  port: 9999
