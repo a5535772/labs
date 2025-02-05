@@ -1,0 +1,46 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>hello</id>
+    <version>1.0.0</version>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Hello</name>
+    <category>UI</category>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="zhangli09@saicmotor.com" url="https://www.saicmotor.com">上汽乘用车</vendor>
+
+    <idea-version since-build="232" until-build="242.*"/>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+  just a description,just a description,just a description,just a description,just a description,just a description,just a description,just a description,just a description
+  ]]></description>
+
+    <!-- Short summary of new features and bugfixes in the latest plugin version.
+         Displayed on the Plugin Page and IDE Plugin Manager. Simple HTML elements can be included between <![CDATA[  ]]> tags. -->
+    <change-notes><![CDATA[
+   just some change-notes,just some change-notes,just some change-notes,just some change-notes,just some change-notes,just some change-notes
+  ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+<!--        <themeProvider id="SaicAi" path="/theme/hello.theme.json"/>-->
+        <toolWindow id="SaicMotorFriday" anchor="right" factoryClass="com.saicmotor.plugins.toolwindow.FridayToolWindowFactory"
+                    secondary="true"/>
+    </extensions>
+
+<!--    <actions>-->
+<!--        &lt;!&ndash; Add your actions here &ndash;&gt;-->
+<!--        <action id="hello1" class="com.saicmotor.plugins.SaicAi" text="SaicAi" description="SaicAi">-->
+<!--            <add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
+<!--        </action>-->
+<!--    </actions>-->
+</idea-plugin>

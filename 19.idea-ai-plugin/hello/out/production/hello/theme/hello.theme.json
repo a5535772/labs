@@ -1,0 +1,11 @@
+{
+  "name": "Hello",
+  "author": "YourCompany",
+  "dark": true,
+  "colors": {
+    "primaryRed": "#821010"
+  },
+  "ui": {
+    "Button.background": "primaryRed"
+  }
+}
