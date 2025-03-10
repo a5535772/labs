@@ -15,10 +15,11 @@
  */
 package com.alibaba.csp.sentinel.dashboard.repository.rule;
 
-import org.springframework.stereotype.Component;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.DegradeRuleEntity;
-import com.alibaba.csp.sentinel.dashboard.util.SnowFlakeUtil;
+
+import org.springframework.stereotype.Component;
 
 /**
  * @author leyou
@@ -26,9 +27,10 @@ import com.alibaba.csp.sentinel.dashboard.util.SnowFlakeUtil;
 @Component
 public class InMemDegradeRuleStore extends InMemoryRuleRepositoryAdapter<DegradeRuleEntity> {
 
+    private static AtomicLong ids = new AtomicLong(0);
 
     @Override
     protected long nextId() {
-    	return SnowFlakeUtil.nextId();
+        return ids.incrementAndGet();
     }
 }
