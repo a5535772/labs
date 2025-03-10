@@ -1,0 +1,9 @@
+spring:
+  ai:
+    alibaba:
+      plugin:
+        translate:
+          api-key:${Translate-key}
+
+    dashscope:
+      api-key: ${dashscope-key}

@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-ai-demo
+
+labs:
+  openai:
+    api-key: sk-12345 #修改为你的key
+    baseUrl: https://api.siliconflow.cn/
+    completionsPath: /v1/chat/completions
+
+logging:
+  level:
+    root: info
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: info  #你可以改为debug
