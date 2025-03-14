@@ -467,6 +467,7 @@ public class DefaultChatClient implements ChatClient {
 		private ChatResponse doGetChatResponse(DefaultChatClientRequestSpec inputRequestSpec,
 				@Nullable String formatParam, Observation parentObservation) {
 
+			//mark by leo 这里是构建AdvisedRequest参数的起点
 			AdvisedRequest advisedRequest = toAdvisedRequest(inputRequestSpec, formatParam);
 
 			// Apply the around advisor chain that terminates with the last model call

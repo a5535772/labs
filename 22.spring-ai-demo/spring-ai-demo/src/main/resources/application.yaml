@@ -6,11 +6,17 @@ spring:
     name: spring-ai-demo
 
 labs:
-  openai:
-    api-key: sk-12345 #修改为你的key
+  siliconflow:
+    api-key: sk-nelxsxftuufyvh #修改为你的key
     baseUrl: https://api.siliconflow.cn/
     completionsPath: /v1/chat/completions
-
+    embeddingsPath: /v1/embeddings
+    aa: /images/generations
+  ark:
+    api-key: d0de3860 #修改为你的key
+    baseUrl: https://ark.cn-beijing.volces.com/api/
+    completionsPath: /v3/chat/completions
+    embeddingsPath: /v3/embeddings
 logging:
   level:
     root: info

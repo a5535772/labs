@@ -656,6 +656,7 @@ public class OpenAiChatModel extends AbstractToolCallSupport implements ChatMode
 			}
 		}).flatMap(List::stream).toList();
 
+		// mark by leo 这里是核心的参数构建
 		ChatCompletionRequest request = new ChatCompletionRequest(chatCompletionMessages, stream);
 
 		OpenAiChatOptions requestOptions = (OpenAiChatOptions) prompt.getOptions();

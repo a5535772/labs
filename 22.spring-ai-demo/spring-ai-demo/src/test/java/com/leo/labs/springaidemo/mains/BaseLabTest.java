@@ -18,9 +18,9 @@ public class BaseLabTest {
     @BeforeEach
     public void init() throws Exception {
         this.yamlData = loadYaml();
-        this.api_key = yamlData.get("labs.openai.api-key");
-        this.baseUrl = yamlData.get("labs.openai.baseUrl");
-        this.completionsPath = yamlData.get("labs.openai.completionsPath");
+        this.api_key = yamlData.get("labs.siliconflow.api-key");
+        this.baseUrl = yamlData.get("labs.siliconflow.baseUrl");
+        this.completionsPath = yamlData.get("labs.siliconflow.completionsPath");
 
     }
 
