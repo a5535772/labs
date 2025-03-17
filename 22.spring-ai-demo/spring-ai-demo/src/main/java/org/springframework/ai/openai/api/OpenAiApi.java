@@ -1135,12 +1135,12 @@ public class OpenAiApi {
 	@JsonInclude(Include.NON_NULL)
 	public record ChatCompletionMessage(// @formatter:off
 			@JsonProperty("content") Object rawContent,
-			@JsonProperty("reasoning_content") Object rawReasoningContent,
-			@JsonProperty("role") Role role,
-			@JsonProperty("name") String name,
-			@JsonProperty("tool_call_id") String toolCallId,
-			@JsonProperty("tool_calls")
-			@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY) List<ToolCall> toolCalls,
+			 @JsonProperty("reasoning_content") Object rawReasoningContent,
+										@JsonProperty("role") Role role,
+										@JsonProperty("name") String name,
+										@JsonProperty("tool_call_id") String toolCallId,
+										@JsonProperty("tool_calls")
+											@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY) List<ToolCall>toolCalls,
 			@JsonProperty("refusal") String refusal,
 			@JsonProperty("audio") AudioOutput audioOutput) { // @formatter:on
 
@@ -1178,7 +1178,7 @@ public class OpenAiApi {
             if (this.rawReasoningContent instanceof String text) {
                 return text;
             }
-            throw new IllegalStateException("The content is not a string!");
+            throw new IllegalStateException("The reasoning content is not a string!");
         }
 
 

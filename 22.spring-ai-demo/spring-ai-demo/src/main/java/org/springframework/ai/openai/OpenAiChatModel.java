@@ -293,7 +293,7 @@ public class OpenAiChatModel extends AbstractToolCallSupport implements ChatMode
 				return chatResponse;
 
 			});
-
+		//注释 by leo 这里是tool use的调用入口
 		if (ToolCallingChatOptions.isInternalToolExecutionEnabled(prompt.getOptions()) && response != null
 				&& response.hasToolCalls()) {
 			var toolExecutionResult = this.toolCallingManager.executeToolCalls(prompt, response);

@@ -520,7 +520,7 @@ public class DefaultChatClient implements ChatClient {
 			if(reasoner!=null){
 				return String.format("{\"reasoner\":\"%s\",\"content\":\"%s\"}", reasoner, content);
 			}else{
-				return String.format("{\"reasoner\":\"%s\",\"content\":\"%s\"}", reasoner, content);
+				return String.format("{\"content\":\"%s\"}", content);
 			}
 
 		}
