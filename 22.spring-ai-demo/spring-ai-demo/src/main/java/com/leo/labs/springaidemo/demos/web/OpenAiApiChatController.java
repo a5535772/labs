@@ -34,6 +34,7 @@ import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.stringtemplate.v4.ST;
 import reactor.core.publisher.Flux;
 
 import java.net.MalformedURLException;
@@ -296,7 +297,8 @@ public class OpenAiApiChatController {
         if ("Y".equals(stream)) {
             return responseSpec.stream().content();
         } else {
-            return Flux.just(responseSpec.call().content());
+            String respString = responseSpec.call().content();
+            return Flux.just(respString==null?"":respString);
         }
     }
 }
