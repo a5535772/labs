@@ -67,7 +67,6 @@ public class AiConfigration {
                 .completionsPath(this.arkCompletionsPath)
                 .embeddingsPath(this.arkEmbeddingsPath)
                 .build();
-
     }
-
+    
 }

@@ -517,7 +517,12 @@ public class DefaultChatClient implements ChatClient {
 			ChatResponse chatResponse = doGetChatResponse();
 			var reasoner=getReasonerFromChatResponse(chatResponse);
 			var content=getContentFromChatResponse(chatResponse);
-            return String.format("{\"reasoner\":\"%s\",\"content\":\"%s\"}", reasoner, content);
+			if(reasoner!=null){
+				return String.format("{\"reasoner\":\"%s\",\"content\":\"%s\"}", reasoner, content);
+			}else{
+				return String.format("{\"reasoner\":\"%s\",\"content\":\"%s\"}", reasoner, content);
+			}
+
 		}
 
 

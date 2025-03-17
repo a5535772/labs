@@ -251,10 +251,10 @@ public class OpenAiApiChatController {
      */
     @RequestMapping("/stream_in_memory_with_image")
     @ResponseBody
-    public Object streamInMemoryWithImage(@RequestParam(name = "system", defaultValue = DEFAULT_SYSTEM) String system,
-                                          @RequestParam(name = "prompt", defaultValue = "Explain what do you see on this picture?") String prompt,
-                                          @RequestParam(name = "modelname", defaultValue = DOUBAO_1_5_VISION_PRO_32K_250115) String modelname,
-                                          @RequestParam(name = "chatId", defaultValue = "1") String chatId, @RequestParam(name = "stream", defaultValue = "N") String stream, HttpServletResponse response) throws MalformedURLException {
+    public Flux<String> streamInMemoryWithImage(@RequestParam(name = "system", defaultValue = DEFAULT_SYSTEM) String system,
+                                                @RequestParam(name = "prompt", defaultValue = "Explain what do you see on this picture?") String prompt,
+                                                @RequestParam(name = "modelname", defaultValue = DOUBAO_1_5_VISION_PRO_32K_250115) String modelname,
+                                                @RequestParam(name = "chatId", defaultValue = "1") String chatId, @RequestParam(name = "stream", defaultValue = "N") String stream, HttpServletResponse response) throws MalformedURLException {
         response.setCharacterEncoding("UTF-8");
 
         var chatModel = OpenAiChatModel.builder().openAiApi(arkOpenAiApi).build();
@@ -294,14 +294,9 @@ public class OpenAiApiChatController {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
         );
         if ("Y".equals(stream)) {
-
             return responseSpec.stream().content();
         } else {
-
-            return responseSpec.call().content();
+            return Flux.just(responseSpec.call().content());
         }
-
     }
-
-
 }
