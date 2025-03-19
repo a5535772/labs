@@ -8,7 +8,7 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("customerTools")
 public class CustomerTools {
     @Autowired
     CustomerApi customerApi;
@@ -23,5 +23,6 @@ public class CustomerTools {
     void updateCustomerInfo(Long id, String name, @ToolParam(required = false) String email, ToolContext toolContext) {
         System.out.println("Updated info for customer with id: " + id + ", name: " + name + ", email: " + email);
     }
+
 
 }

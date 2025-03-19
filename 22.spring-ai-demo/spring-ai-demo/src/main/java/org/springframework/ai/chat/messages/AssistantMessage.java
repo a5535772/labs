@@ -35,109 +35,116 @@ import java.util.Objects;
  * @author Christian Tzolov
  * @since 1.0.0
  */
+
 public class AssistantMessage extends AbstractMessage implements MediaContent {
 
-	/**
-	 * The reasoner of the message.
-	 * changed by leo
-	 */
-	protected final String reasonerContent;
+    /**
+     * The reasoner of the message.
+     * changed by leo
+     */
+    protected final String reasonerContent;
 
-	private final List<ToolCall> toolCalls;
+    private final List<ToolCall> toolCalls;
 
-	protected final List<Media> media;
+    protected final List<Media> media;
 
-	public AssistantMessage(String content) {
-		this(content, Map.of());
-	}
+    public AssistantMessage(String content) {
+        this(content, Map.of());
+    }
 
-	public AssistantMessage(String content, Map<String, Object> properties) {
-		this(content, properties, List.of());
-	}
+    public AssistantMessage(String content, Map<String, Object> properties) {
+        this(content, properties, List.of());
+    }
 
-	public AssistantMessage(String content, Map<String, Object> properties, List<ToolCall> toolCalls) {
-		this(content, properties, toolCalls, List.of());
-	}
+    public AssistantMessage(String content, Map<String, Object> properties, List<ToolCall> toolCalls) {
+        this(content, properties, toolCalls, List.of());
+    }
 
-	public AssistantMessage(String content, Map<String, Object> properties, List<ToolCall> toolCalls,
+    public AssistantMessage(String content, Map<String, Object> properties, List<ToolCall> toolCalls,
                             List<Media> media) {
-		super(MessageType.ASSISTANT, content, properties);
-		Assert.notNull(toolCalls, "Tool calls must not be null");
-		Assert.notNull(media, "Media must not be null");
-		this.toolCalls = toolCalls;
-		this.media = media;
-		// changed by leo
-		this.reasonerContent = null;
-	}
+        super(MessageType.ASSISTANT, content, properties);
+        Assert.notNull(toolCalls, "Tool calls must not be null");
+        Assert.notNull(media, "Media must not be null");
+        this.toolCalls = toolCalls;
+        this.media = media;
+        // changed by leo
+        this.reasonerContent = null;
+    }
 
-	/**
-	 * changed by leo
-	 * @param content
-	 * @param reasonerContent
-	 * @param properties
-	 * @param toolCalls
-	 * @param media
-	 */
-	public AssistantMessage(String content,String reasonerContent, Map<String, Object> properties, List<ToolCall> toolCalls,
-							List<Media> media) {
-		super(MessageType.ASSISTANT, content, properties);
-		Assert.notNull(toolCalls, "Tool calls must not be null");
-		Assert.notNull(media, "Media must not be null");
-		this.toolCalls = toolCalls;
-		this.media = media;
-		this.reasonerContent = reasonerContent;
-	}
+    /**
+     * changed by leo
+     *
+     * @param content
+     * @param reasonerContent
+     * @param properties
+     * @param toolCalls
+     * @param media
+     */
+    public AssistantMessage(String content, String reasonerContent, Map<String, Object> properties, List<ToolCall> toolCalls,
+                            List<Media> media) {
+        super(MessageType.ASSISTANT, content, properties);
+        Assert.notNull(toolCalls, "Tool calls must not be null");
+        Assert.notNull(media, "Media must not be null");
+        this.toolCalls = toolCalls;
+        this.media = media;
+        this.reasonerContent = reasonerContent;
+    }
 
 
+    public List<ToolCall> getToolCalls() {
+        return this.toolCalls;
+    }
 
-	public List<ToolCall> getToolCalls() {
-		return this.toolCalls;
-	}
+    public boolean hasToolCalls() {
+        return !CollectionUtils.isEmpty(this.toolCalls);
+    }
 
-	public boolean hasToolCalls() {
-		return !CollectionUtils.isEmpty(this.toolCalls);
-	}
+    @Override
+    public List<Media> getMedia() {
+        return this.media;
+    }
 
-	@Override
-	public List<Media> getMedia() {
-		return this.media;
-	}
+    /**
+     * changed by leo
+     *
+     * @return
+     */
+    public String getReasonerContent() {
+        return reasonerContent;
+    }
 
-	/**
-	 * changed by leo
-	 * @return
-	 */
-	public String getReasonerContent() {
-		return reasonerContent;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AssistantMessage that = (AssistantMessage) o;
+        return Objects.equals(reasonerContent, that.reasonerContent) && Objects.equals(toolCalls, that.toolCalls) && Objects.equals(media, that.media);
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		AssistantMessage that = (AssistantMessage) o;
-		return Objects.equals(reasonerContent, that.reasonerContent) && Objects.equals(toolCalls, that.toolCalls) && Objects.equals(media, that.media);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), reasonerContent, toolCalls, media);
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), reasonerContent, toolCalls, media);
-	}
+    @Override
+    public String toString() {
+        return "AssistantMessage{" +
+                "reasonerContent='" + reasonerContent + '\'' +
+                ", toolCalls=" + toolCalls +
+                ", media=" + media +
+                ", messageType=" + messageType +
+                ", textContent='" + textContent + '\'' +
+                ", metadata=" + metadata +
+                '}';
+    }
 
-	@Override
-	public String toString() {
-		return "AssistantMessage{" +
-				"reasonerContent='" + reasonerContent + '\'' +
-				", toolCalls=" + toolCalls +
-				", media=" + media +
-				", messageType=" + messageType +
-				", textContent='" + textContent + '\'' +
-				", metadata=" + metadata +
-				'}';
-	}
+    public String toJson() {
+        return "{\"reasonerContent\":\"" + reasonerContent + "\",\"toolCalls\":" + toolCalls + ",\"media\":" + media + ",\"messageType\":\"" + messageType + "\",\"textContent\":\"" + textContent + "\",\"metadata\":" + metadata + "}";
+    }
 
-	public record ToolCall(String id, String type, String name, String arguments) {
+    public record ToolCall(String id, String type, String name, String arguments) {
 
-	}
+    }
+
 
 }

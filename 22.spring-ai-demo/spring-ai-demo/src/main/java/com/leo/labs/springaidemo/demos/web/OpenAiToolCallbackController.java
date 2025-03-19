@@ -78,10 +78,10 @@ public class OpenAiToolCallbackController {
      */
     @RequestMapping("/tools")
     @ResponseBody
-    public String chat(@RequestParam(name = "system", defaultValue = DEFAULT_SYSTEM) String system,
-                       @RequestParam(name = "prompt", defaultValue = "What day is tomorrow?") String prompt,
-                       @RequestParam(name = "modelname", defaultValue = DOUBAO_1_5_PRO_32K_250115) String modelname,
-                       @RequestParam(name = "chatId", defaultValue = "1") String chatId) {
+    public String tools(@RequestParam(name = "system", defaultValue = DEFAULT_SYSTEM) String system,
+                        @RequestParam(name = "prompt", defaultValue = "What day is tomorrow?") String prompt,
+                        @RequestParam(name = "modelname", defaultValue = DOUBAO_1_5_PRO_32K_250115) String modelname,
+                        @RequestParam(name = "chatId", defaultValue = "1") String chatId) {
 
         var chatModel = OpenAiChatModel.builder().openAiApi(arkOpenAiApi).build();
 
@@ -110,5 +110,6 @@ public class OpenAiToolCallbackController {
                                 .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
                 ).call().content();
     }
+
 
 }

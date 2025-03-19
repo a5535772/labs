@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
  * <p>
  * Here is an example of how to use the @Tool annotation:
  */
-@Component
+@Component("dateTimeTools")
 public class DateTimeTools {
     @Tool(description = "Get the current date and time in the user's timezone")
     String getCurrentDateTime(ToolContext toolContext) {

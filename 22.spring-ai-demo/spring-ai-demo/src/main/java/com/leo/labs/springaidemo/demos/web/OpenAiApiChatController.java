@@ -18,11 +18,15 @@ package com.leo.labs.springaidemo.demos.web;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.CustomMessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.CustomWordEncryptionAdvisor;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.model.Media;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
@@ -31,15 +35,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.stringtemplate.v4.ST;
 import reactor.core.publisher.Flux;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 import static com.leo.labs.springaidemo.demos.statics.Constants.DOUBAO_1_5_VISION_PRO_32K_250115;
 import static com.leo.labs.springaidemo.demos.statics.Constants.MODEL_QWEN;
@@ -295,10 +300,90 @@ public class OpenAiApiChatController {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
         );
         if ("Y".equals(stream)) {
-            return responseSpec.stream().content();
+            // 在返回流式响应之前做额外工作
+            Flux<String> flux = responseSpec.stream().content();
+            flux = flux.doOnNext(data -> {
+                // 对每个数据块执行操作，比如日志记录
+                System.out.println("Stream data: " + data);
+            }).doFinally(signalType -> {
+                // 在流完成或出错时执行操作
+                System.out.println("Stream completed");
+            });
+            return flux;
         } else {
             String respString = responseSpec.call().content();
-            return Flux.just(respString==null?"":respString);
+            // 在返回单个字符串之前做额外工作
+            if (respString != null) {
+                // 例如：日志记录、数据转换等
+                System.out.println("Response string: " + respString);
+            }
+            return Flux.just(respString == null ? "" : respString);
         }
+    }
+
+    /**
+     * 127.0.0.1:8080/ai/chat/custom/response?prompt=我叫刘德华,我的英文名字是什么&stream=Y
+     *
+     * @param system
+     * @param prompt
+     * @param modelname
+     * @return
+     */
+    @RequestMapping("/chat/custom/response")
+    public Flux<String> chatCustomResponse(@RequestParam(name = "system", defaultValue = DEFAULT_SYSTEM) String system,
+                                           @RequestParam(name = "prompt", defaultValue = "给我讲个冷笑话?") String prompt,
+                                           @RequestParam(name = "modelname", defaultValue = MODEL_QWEN) String modelname,
+                                           @RequestParam(name = "chatId", defaultValue = "1") String chatId, @RequestParam(name = "stream", defaultValue = "N") String stream, HttpServletResponse response) throws MalformedURLException {
+        response.setCharacterEncoding("UTF-8");
+
+        var chatModel = OpenAiChatModel.builder().openAiApi(siliconflowOpenAiApi).build();
+
+        var openAiChatClient = ChatClient.builder(chatModel)
+                .defaultAdvisors(
+                        new CustomMessageChatMemoryAdvisor(inMemoryChatMemory),
+                        new CustomWordEncryptionAdvisor(100)
+                )
+                // 设置 ChatClient 中 ChatModel 的 Options 参数
+                .defaultOptions(
+                        OpenAiChatOptions.builder()
+                                .model(modelname)
+                                .temperature(0.4)
+                                .maxTokens(2000)
+                                .topP(0.7)
+                                .build()
+                )
+                .build();
+
+        var userMessage = new UserMessage(prompt);
+        var systemMessage = new SystemMessage(system);
+        ChatClient.ChatClientRequestSpec responseSpec = openAiChatClient.prompt().messages(List.of(systemMessage, userMessage));
+        responseSpec.advisors(
+                (advisorSpec -> advisorSpec
+                        .param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
+        );
+        if ("Y".equals(stream)) {
+            return responseSpec.stream().chatResponse()
+                    .map(OpenAiApiChatController::getAssistantMessage)
+                    .map(AssistantMessage::toJson);
+        } else {
+            ChatResponse chatResponse = responseSpec.call().chatResponse();
+            AssistantMessage assistantMessage = getAssistantMessage(chatResponse);
+            return Flux.just(assistantMessage.toJson());
+        }
+    }
+
+    private static AssistantMessage getAssistantMessage(ChatResponse chatResponse) {
+        if (chatResponse == null) {
+            return new AssistantMessage("");
+        }
+        AssistantMessage assistantMessage = chatResponse.getResult().getOutput();
+        String decryptText = chatResponse.getMetadata().get(CustomWordEncryptionAdvisor.decryptText);
+        if (StringUtils.hasText(decryptText)) {
+            Map<String, Object> properties = assistantMessage.getMetadata();
+            properties.put(CustomWordEncryptionAdvisor.decryptText, decryptText);
+            assistantMessage = new AssistantMessage(assistantMessage.getText(), assistantMessage.getReasonerContent(), properties, assistantMessage.getToolCalls(), assistantMessage.getMedia());
+        }
+        return assistantMessage;
     }
 }
