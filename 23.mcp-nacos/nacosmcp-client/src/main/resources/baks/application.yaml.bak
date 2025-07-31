@@ -1,0 +1,55 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: nacosclient
+#  config:
+#    import:
+#      - nacos:springaidemoconfig?group=DEFAULT_GROUP  # 注意后缀名
+#  作为配置中心和注册中心使用
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+      discovery:
+        server-addr: localhost:8848
+#        以下注释为纯血spring的，现在要改为使用nacos的配置中心
+#  ai:
+#    mcp:
+#      client:
+#        enabled: true
+#        name: my-mcp-client
+#        version: 1.0.0
+#        request-timeout: 30s
+#        type: SYNC  # or ASYNC for reactive applications
+#        sse:
+#          connections:
+#            server1:
+#              url: http://localhost:8088
+
+#        以下注释为spring-nacos-mcp
+  ai:
+    mcp:
+      client:
+        enabled: true
+        name: spring-ai-demo-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: SYNC  # or ASYNC for reactive applications
+
+    alibaba:
+      mcp:
+        nacos:
+          enabled: true
+          server-addr: localhost:8848
+          namespace: public    # Nacos 命名空间 ID（默认为public）
+          username: nacos
+          password: nacos
+        client:
+          enabled: true
+          sse:
+            connections:
+              server1:
+                service-group:  DEFAULT_GROUP
+                service-name: spring-ai-demo-mcp-server
