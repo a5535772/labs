@@ -66,4 +66,3 @@ class Conf(BaseSettings):
 
 def init_conf() -> Conf:
     return Conf().setup()
-
