@@ -16,14 +16,14 @@ public class BasicController {
     String author;
 
     // http://127.0.0.1:8088/hello?name=lisi
-    @RequestMapping("/hello")
+    @RequestMapping("/hello1")
     @ResponseBody
     public String hello(@RequestParam(name = "name", defaultValue = "unknown user") String name) {
         return "Hello " + name;
     }
 
     // http://127.0.0.1:8088/author
-    @RequestMapping("/author")
+    @RequestMapping("/hello")
     @ResponseBody
     public String author() {
         return "author: " + author;
