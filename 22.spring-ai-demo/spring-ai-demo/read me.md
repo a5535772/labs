@@ -1,0 +1,1 @@
+Spring AI 1.0.0-M6，已过期，请使用spring ai 1.0

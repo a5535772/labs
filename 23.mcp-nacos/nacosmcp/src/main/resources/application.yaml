@@ -2,7 +2,7 @@ server:
   port: 8088
 spring:
   application:
-    name: nacosmcp
+    name: nacosmcpboot
   config:
     import:
       - nacos:springaidemoconfig?group=DEFAULT_GROUP  # 注意后缀名
@@ -19,8 +19,8 @@ spring:
     mcp:
       # 作为mcp服务端的配置
       server:
-        name: spring-ai-demo-mcp-server   # MCP服务名称
-        version: 1.0.1            # 服务版本
+        name: nacosmcpserver   # MCP服务名称
+        version: 1.0.0            # 服务版本
         type: SYNC                # 调用类型：SYNC（同步）或ASYNC（异步）
 
     alibaba:
@@ -33,7 +33,17 @@ spring:
           password: nacos          # 开源控制台密码
           registry:
             enabled: true   # 是否开启服务注册
-
+labs:
+  siliconflow:
+    api-key: sk-nelxcpuwepgvvxbwbyvbbmfyeairkamgannlpwsxftuufyvh #修改为你的key
+    baseUrl: https://api.siliconflow.cn/
+    completionsPath: /v1/chat/completions
+    embeddingsPath: /v1/embeddings
+  ark:
+    api-key: d0de3cf9-1c42-4af9-b8ab-8c96b5d9e860 #修改为你的key
+    baseUrl: https://ark.cn-beijing.volces.com/api/
+    completionsPath: /v3/chat/completions
+    embeddingsPath: /v3/embeddings
 logging:
   level:
     root: info

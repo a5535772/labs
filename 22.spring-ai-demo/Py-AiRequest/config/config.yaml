@@ -1,4 +1,4 @@
-silicon_flow_api_key: sk-
+silicon_flow_api_key: sk-nelxcpuwepgvvxbwbyvbbmfyeairkamgannlpwsxftuufyvh
 silicon_flow_base_url: https://api.siliconflow.cn/
 silicon_flow_completions_path: /v1/chat/completions
 silicon_flow_embeddings_path: /v1/embeddings
@@ -7,7 +7,7 @@ silicon_flow_models_qwen: Pro/Qwen/Qwen2.5-VL-7B-Instruct
 silicon_flow_models_qwen_tools: Qwen/Qwen2.5-7B-Instruct
 silicon_flow_models_embedding_model: AAI/bge-large-zh-v1.5
 
-ark_api_key: d0de3cf9-
+ark_api_key: d0de3cf9-1c42-4af9-b8ab-8c96b5d9e860
 ark_base_url: https://ark.cn-beijing.volces.com/api/
 ark_completions_path: /v3/chat/completions
 ark_embeddings_path: /v3/embeddings
@@ -15,7 +15,7 @@ ark_flow_models_doubao_1_5_vision_pro: doubao-1-5-vision-pro-32k-250115
 ark_flow_models_doubao_1_5_pro_32k: doubao-1-5-pro-32k-250115
 
 
-langsmith_langchain_api_key: lsv2_pt_
+langsmith_langchain_api_key: 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
 langsmith_langchain_tracing_v2: "true"
 
-tools_tavily_api_key: tvly-dev-
+tools_tavily_api_key: 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
