@@ -15,7 +15,7 @@ ark_flow_models_doubao_1_5_vision_pro: doubao-1-5-vision-pro-32k-250115
 ark_flow_models_doubao_1_5_pro_32k: doubao-1-5-pro-32k-250115
 
 
-langsmith_langchain_api_key: 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
+langsmith_langchain_api_key: 
 langsmith_langchain_tracing_v2: "true"
 
 tools_tavily_api_key: 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
